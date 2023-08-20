@@ -11,17 +11,14 @@ pub struct Board {
     cols: usize,
 }
 
-/// Simple program to greet a person
-#[derive(Parser, Debug)]
+#[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Name of the person to greet
-    #[arg(long, default_value_t = 20)]
-    cols: usize,
-
-    /// Number of times to greet
-    #[arg(long, default_value_t = 20)]
+    #[arg(short, default_value_t = 20)]
     rows: usize,
+
+    #[arg(short, default_value_t = 40)]
+    cols: usize,
 }
 
 const ALIVE: &str = "@";
@@ -96,28 +93,6 @@ fn update(board: &Board) -> Frame {
     next_gen
 }
 
-// fn get_neighbors(board: &Board, row: usize, col: usize) -> u32 {
-//     let rows = board.rows as i32;
-//     let cols = board.cols as i32;
-//     let our_row = i32::try_from(row).unwrap();
-//     let our_col = i32::try_from(col).unwrap();
-//     let mut count = 0;
-//     for (i, j) in POSITIONS {
-//         let next_x = our_row + i;
-//         let next_y = our_col + j;
-//         if next_x > 0 && next_x < rows && next_y > 0 && next_y < cols {
-//             if board.items[next_x as usize][next_y as usize] == ALIVE {
-//                 count += 1;
-//             }
-//         }
-//     }
-//     count
-// }
-
-// fn is_alive(board: &Board, row: usize, col: usize) -> bool {
-//     return (row < board.rows) && (col < board.cols) && board.items[row][col] == ALIVE;
-// }
-
 fn print_board(board: &Board) {
     print!(" ");
     for _ in 0..board.cols - 1 {
@@ -153,6 +128,6 @@ fn main() {
     loop {
         print_board(&board);
         board.items = update(&board);
-        sleep(Duration::from_millis(100));
+        sleep(Duration::from_millis(250));
     }
 }
